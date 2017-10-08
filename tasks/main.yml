@@ -1,0 +1,9 @@
+---
+
+# Main tasks file for rsync-server role
+
+- name: 'INIT | Manage variables to use for our target'
+  include: "{{ role_path }}/tasks/manage_variables.yml"
+  tags:
+    - 'role::rsync-server'
+    - 'role::rsync-server::init'
