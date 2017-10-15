@@ -6,7 +6,7 @@ Install rsync-server package.
 
 ## Requirements
 
-This role requires Ansible 2.0 or higher,
+This role requires Ansible 2.2 or higher,
 and platform requirements are listed in the metadata file.
 
 ## Testing
@@ -22,10 +22,9 @@ Currently, tests are done on:
 - Ubuntu Xenial
 
 and use:
-- Ansible 2.0.x
-- Ansible 2.1.x
 - Ansible 2.2.x
 - Ansible 2.3.x
+- Ansible 2.4.x
 
 ### Running tests
 
