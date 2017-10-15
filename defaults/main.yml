@@ -1,0 +1,36 @@
+---
+
+# Defaults vars file for rsync-server role
+
+# Packages and repositories
+rsync_server_repository_cache_valid_time: 3600
+rsync_server_packages: "{{ _rsync_server_packages }}"
+
+# Paths
+rsync_server_paths: "{{ _rsync_server_paths }}"
+
+# User and group management
+rsync_server_group:
+  name: 'rsync'
+rsync_server_user:
+  name: 'rsync'
+  group: "{{ rsync_server_group.name }}"
+  home: '/dev/null'
+  shell: '/bin/false'
+
+# Main configuration
+rsync_server_config_main:
+  global: |
+    uid = rsync
+    gid = rsync
+    log file = /var/log/rsync/rsyncd.log
+  modules: []
+
+# Default daemon configuration
+rsync_server_config_default: |
+  RSYNC_ENABLE=true
+  RSYNC_OPTS=''
+  RSYNC_NICE=''
+
+# Service management
+rsync_server_service: "{{ _rsync_server_service }}"

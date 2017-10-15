@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+{{ rsync_server_config_main.global }}
+
+{% for item in rsync_server_config_main.modules %}
+[{{ item.name }}]
+{{ item.config }}
+{% endfor %}

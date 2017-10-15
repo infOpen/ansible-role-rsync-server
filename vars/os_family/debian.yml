@@ -1,0 +1,22 @@
+---
+
+# Packages and repositories
+_rsync_server_packages:
+  - name: 'rsync'
+
+# Paths
+_rsync_server_paths:
+  dirs:
+    log:
+      path: '/var/log/rsync'
+      owner: "{{ rsync_server_user.name }}"
+      group: "{{ rsync_server_group.name }}"
+  files:
+    default:
+      path: '/etc/default/rsync'
+    main_config:
+      path: '/etc/rsyncd.conf'
+
+# Service management
+_rsync_server_service:
+  name: 'rsync'
