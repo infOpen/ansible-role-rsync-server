@@ -39,6 +39,9 @@ provisioner:
               config: |
                 path = /data/backup_01
                 comment = Backup testing 01
+        rsync_users:
+          - name: 'foo'
+            password: 'bar'
 scenario:
   name: 'default'
 verifier:

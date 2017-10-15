@@ -43,3 +43,14 @@
     state: 'directory'
   notify: 'HANDLER | Restart Rsync'
   when: "rsync_server_paths.dirs.log.path"
+
+
+- name: 'CONFIG | Manage user authentication file'
+  become: True
+  template:
+    src: "{{ role_path }}/templates/rsyncd.secrets.j2"
+    dest: "{{ rsync_server_paths.files.secrets.path }}"
+    owner: "{{ rsync_server_paths.files.secrets.owner | default('root') }}"
+    group: "{{ rsync_server_paths.files.secrets.group | default('root') }}"
+    mode: "{{ rsync_server_paths.files.secrets.mode | default('0400') }}"
+  when: "rsync_users"

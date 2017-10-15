@@ -16,6 +16,8 @@ _rsync_server_paths:
       path: '/etc/default/rsync'
     main_config:
       path: '/etc/rsyncd.conf'
+    secrets:
+      path: '/etc/rsyncd.secrets'
 
 # Service management
 _rsync_server_service:
