@@ -1,3 +1,11 @@
 ---
 
 # Handlers main file for rsync-server role
+
+- name: 'HANDLER | Restart Rsync'
+  become: True
+  service:
+    name: "{{ rsync_server_service.name }}"
+    state: 'restarted'
+    sleep: "{{ rsync_server_service.sleep | default(15) }}"
+  when: "rsync_server_service.state | default('started') == 'started'"

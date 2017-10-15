@@ -46,7 +46,72 @@ $ MOLECULE_DRIVER=vagrant tox
 ### Default role variables
 
 ``` yaml
+# Packages and repositories
+rsync_server_repository_cache_valid_time: 3600
+rsync_server_packages: "{{ _rsync_server_packages }}"
+
+# User and group management
+rsync_server_group:
+  name: 'rsync'
+rsync_server_user:
+  name: 'rsync'
+  group: "{{ rsync_server_group.name }}"
+  home: '/dev/null'
+  shell: '/bin/false'
+
+# Main configuration
+rsync_server_config_main:
+  global: |
+    uid = rsync
+    gid = rsync
+  modules: []
+
+# Default daemon configuration
+rsync_server_config_default: |
+  RSYNC_ENABLE=false
+  RSYNC_OPTS=''
+  RSYNC_NICE=''
+
+# Service management
+rsync_server_service: "{{ _rsync_server_service }}"
 ```
+
+### Debian OS family role variables
+
+``` yaml
+# Packages and repositories
+_rsync_server_packages:
+  - name: 'rsync'
+
+# Paths
+_rsync_server_paths:
+  files:
+    default:
+      path: '/etc/default/rsync'
+    main_config:
+      path: '/etc/rsyncd.conf'
+
+# Service management
+_rsync_server_service:
+  name: 'rsync'
+```
+
+## How manage rsync configuration
+
+Follow this example:
+``` yaml
+rsync_server_config:
+  global: |
+    uid: 'rsync'
+    gid: 'rsync'
+  modules:
+    - name: 'my_sync'
+      config: |
+        path = /data
+        comment = Example sync
+        read only = false
+```
+
 
 ## Dependencies
 

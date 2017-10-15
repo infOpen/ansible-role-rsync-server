@@ -2,8 +2,8 @@
 
 # Role tests
 
-- hosts: 'rsync-server-vagrant-xenial64:rsync-server-docker-xenial'
-  name: 'Install tests prerequisites'
+- hosts: 'rsync-server-docker-xenial'
+  name: 'Install tests prerequisites - specific'
   gather_facts: False
   tasks:
     - name: 'PREREQUISITES | APT | Do an apt-get update'
@@ -17,7 +17,11 @@
 
 
 - hosts: 'all'
+  pre_tasks:
+    - name: 'PREREQUISITES | APT | Install network tools'
+      become: True
+      apt:
+        name: 'net-tools'
+      changed_when: False
   roles:
-    - role: "{{ role_name }}"
-  vars:
-    role_name: "{{ playbook_dir | basename }}"
+    - role: "{{ role_name | default('ansible-role-rsync-server') }}"

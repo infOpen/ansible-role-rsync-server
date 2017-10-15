@@ -1,0 +1,49 @@
+---
+dependency:
+  name: 'galaxy'
+driver:
+  name: 'docker'
+lint:
+  name: 'yamllint'
+platforms:
+  - name: 'rsync-server-docker-jessie'
+    image: 'debian:jessie'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+  - name: 'rsync-server-docker-xenial'
+    image: 'ubuntu:xenial'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+  - name: 'rsync-server-docker-trusty'
+    image: 'ubuntu:trusty'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+provisioner:
+  name: 'ansible'
+  lint:
+    name: 'ansible-lint'
+  inventory:
+    group_vars:
+      all:
+        ansible_python_interpreter: '/usr/bin/env python2.7'
+        rsync_server_config_main:
+          global: |
+            log file = /var/log/rsync/rsyncd.log
+            uid = rsync
+            gid = rsync
+          modules:
+            - name: 'backup_01'
+              config: |
+                path = /data/backup_01
+                comment = Backup testing 01
+scenario:
+  name: 'default'
+verifier:
+  name: 'testinfra'
+  additional_files_or_dirs:
+    - '../../tests'
+  lint:
+    name: 'flake8'

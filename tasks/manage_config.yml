@@ -1,0 +1,45 @@
+---
+
+- name: 'CONFIG | Manage rsync group'
+  group:
+    name: "{{ rsync_server_group.name }}"
+    gid: "{{ rsync_server_group.gid | default(omit) }}"
+
+
+- name: 'CONFIG | Manage rsync user'
+  user:
+    name: "{{ rsync_server_user.name }}"
+    uid: "{{ rsync_server_user.uid | default(omit) }}"
+    home: "{{ rsync_server_user.home | default(omit) }}"
+    shell: "{{ rsync_server_user.shell | default(omit) }}"
+
+
+- name: 'CONFIG | Manage main configuration file'
+  template:
+    src: "{{ role_path }}/templates/rsyncd.conf.j2"
+    dest: "{{ rsync_server_paths.files.main_config.path }}"
+    owner: "{{ rsync_server_paths.files.main_config.owner | default('root') }}"
+    group: "{{ rsync_server_paths.files.main_config.group | default('root') }}"
+    mode: "{{ rsync_server_paths.files.main_config.mode | default('0440') }}"
+  notify: 'HANDLER | Restart Rsync'
+
+
+- name: 'CONFIG | Manage default configuration file'
+  template:
+    src: "{{ role_path }}/templates/default.j2"
+    dest: "{{ rsync_server_paths.files.default.path }}"
+    owner: "{{ rsync_server_paths.files.default.owner | default('root') }}"
+    group: "{{ rsync_server_paths.files.default.group | default('root') }}"
+    mode: "{{ rsync_server_paths.files.default.mode | default('0440') }}"
+  notify: 'HANDLER | Restart Rsync'
+
+
+- name: 'CONFIG | Ensure log folder exists'
+  file:
+    dest: "{{ rsync_server_paths.dirs.log.path }}"
+    owner: "{{ rsync_server_paths.dirs.log.owner | default('root') }}"
+    group: "{{ rsync_server_paths.dirs.log.group | default('root') }}"
+    mode: "{{ rsync_server_paths.dirs.log.mode | default('0750') }}"
+    state: 'directory'
+  notify: 'HANDLER | Restart Rsync'
+  when: "rsync_server_paths.dirs.log.path"

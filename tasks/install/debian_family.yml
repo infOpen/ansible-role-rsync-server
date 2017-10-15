@@ -1,0 +1,12 @@
+---
+
+# Specific install tasks for Debian family
+
+- name: 'INSTALL | APT | Install packages'
+  apt:
+    name: "{{ item.name }}"
+    update_cache: True
+    cache_valid_time: "{{ rsync_server_repository_cache_valid_time }}"
+    state: "{{ item.state | default('present') }}"
+  notify: 'HANDLER | Restart Rsync'
+  with_items: "{{ rsync_server_packages }}"
