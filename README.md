@@ -1,6 +1,10 @@
 # rsync-server
 
-[![Build Status](https://travis-ci.org/infOpen/ansible-role-rsync-server.svg?branch=master)](https://travis-ci.org/infOpen/ansible-role-rsync-server)
+[![Build Status](https://img.shields.io/travis/infOpen/ansible-role-rsync-server/master.svg?label=travis_master)](https://travis-ci.org/infOpen/ansible-role-rsync-server)
+[![Build Status](https://img.shields.io/travis/infOpen/ansible-role-rsync-server/develop.svg?label=travis_develop)](https://travis-ci.org/infOpen/ansible-role-rsync-server)
+[![Updates](https://pyup.io/repos/github/infOpen/ansible-role-rsync-server/shield.svg)](https://pyup.io/repos/github/infOpen/ansible-role-rsync-server/)
+[![Python 3](https://pyup.io/repos/github/infOpen/ansible-role-rsync-server/python-3-shield.svg)](https://pyup.io/repos/github/infOpen/ansible-role-rsync-server/)
+[![Ansible Role](https://img.shields.io/ansible/role/21209.svg)](https://galaxy.ansible.com/infOpen/rsync-server/)
 
 Install rsync-server package.
 
