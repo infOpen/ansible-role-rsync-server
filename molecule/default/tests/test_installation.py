@@ -23,6 +23,7 @@ def test_packages(host, name):
 @pytest.mark.parametrize('item_type,path,user,group,mode', [
     ('dir', '/var/log/rsync', 'rsync', 'rsync', 0o750),
     ('file', '/etc/rsyncd.conf', 'root', 'root', 0o440),
+    ('file', '/etc/rsyncd.secrets', 'root', 'root', 0o400),
 ])
 def test_paths(host, item_type, path, user, group, mode):
     """

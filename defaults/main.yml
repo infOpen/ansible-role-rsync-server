@@ -34,3 +34,6 @@ rsync_server_config_default: |
 
 # Service management
 rsync_server_service: "{{ _rsync_server_service }}"
+
+# Users management
+rsync_users: []

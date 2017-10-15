@@ -99,7 +99,9 @@ _rsync_server_service:
   name: 'rsync'
 ```
 
-## How manage rsync configuration
+## How ...
+
+### Manage rsync configuration
 
 Follow this example:
 ``` yaml
@@ -113,6 +115,14 @@ rsync_server_config:
         path = /data
         comment = Example sync
         read only = false
+```
+
+### Manage users used to authorization
+
+``` yaml
+rsync_users:
+  - name: 'foo'
+    password: 'bar'
 ```
 
 
