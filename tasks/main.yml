@@ -3,7 +3,7 @@
 # Main tasks file for rsync-server role
 
 - name: 'INIT | Manage variables to use for our target'
-  include: "{{ role_path }}/tasks/manage_variables.yml"
+  import_tasks: "{{ role_path }}/tasks/manage_variables.yml"
   tags:
     - 'role::rsync-server'
     - 'role::rsync-server::config'
@@ -12,24 +12,22 @@
 
 
 - name: 'INSTALL | Manage os family installation tasks'
-  include: "{{ role_path }}/tasks/install/{{ ansible_os_family | lower }}_family.yml"
-  become: True
+  include_tasks: "{{ role_path }}/tasks/install/{{ ansible_os_family | lower }}_family.yml"
   tags:
     - 'role::rsync-server'
     - 'role::rsync-server::install'
 
 
 - name: 'INSTALL | Manage configuration'
-  include: "{{ role_path }}/tasks/manage_config.yml"
-  become: True
+  include_tasks: "{{ role_path }}/tasks/manage_config.yml"
   tags:
     - 'role::rsync-server'
     - 'role::rsync-server::config'
 
 
 - name: 'INSTALL | Manage service'
-  include: "{{ role_path }}/tasks/manage_service.yml"
-  become: True
+  include_tasks: "{{ role_path }}/tasks/manage_service.yml"
+  when: 'rsync_server_service | bool'
   tags:
     - 'role::rsync-server'
     - 'role::rsync-server::install'

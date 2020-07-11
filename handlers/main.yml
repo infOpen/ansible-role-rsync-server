@@ -8,4 +8,6 @@
     name: "{{ rsync_server_service.name }}"
     state: 'restarted'
     sleep: "{{ rsync_server_service.sleep | default(15) }}"
-  when: "rsync_server_service.state | default('started') == 'started'"
+  when:
+    - 'rsync_server_service | bool'
+    - "rsync_server_service.state | default('started') == 'started'"

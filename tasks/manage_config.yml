@@ -1,12 +1,14 @@
 ---
 
 - name: 'CONFIG | Manage rsync group'
+  become: True
   group:
     name: "{{ rsync_server_group.name }}"
     gid: "{{ rsync_server_group.gid | default(omit) }}"
 
 
 - name: 'CONFIG | Manage rsync user'
+  become: True
   user:
     name: "{{ rsync_server_user.name }}"
     uid: "{{ rsync_server_user.uid | default(omit) }}"
@@ -15,6 +17,7 @@
 
 
 - name: 'CONFIG | Manage main configuration file'
+  become: True
   template:
     src: "{{ role_path }}/templates/rsyncd.conf.j2"
     dest: "{{ rsync_server_paths.files.main_config.path }}"
@@ -25,6 +28,7 @@
 
 
 - name: 'CONFIG | Manage default configuration file'
+  become: True
   template:
     src: "{{ role_path }}/templates/default.j2"
     dest: "{{ rsync_server_paths.files.default.path }}"
@@ -35,6 +39,7 @@
 
 
 - name: 'CONFIG | Ensure log folder exists'
+  become: True
   file:
     dest: "{{ rsync_server_paths.dirs.log.path }}"
     owner: "{{ rsync_server_paths.dirs.log.owner | default('root') }}"
@@ -42,7 +47,7 @@
     mode: "{{ rsync_server_paths.dirs.log.mode | default('0750') }}"
     state: 'directory'
   notify: 'HANDLER | Restart Rsync'
-  when: "rsync_server_paths.dirs.log.path"
+  when: 'rsync_server_paths.dirs.log.path'
 
 
 - name: 'CONFIG | Manage user authentication file'
@@ -53,4 +58,4 @@
     owner: "{{ rsync_server_paths.files.secrets.owner | default('root') }}"
     group: "{{ rsync_server_paths.files.secrets.group | default('root') }}"
     mode: "{{ rsync_server_paths.files.secrets.mode | default('0400') }}"
-  when: "rsync_users"
+  when: 'rsync_users | length | bool'

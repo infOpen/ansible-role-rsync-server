@@ -1,0 +1,11 @@
+---
+
+# Specific install tasks for Redhat family
+
+- name: 'INSTALL | YUM | Install packages'
+  become: True
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  notify: 'HANDLER | Restart Rsync'
+  loop: "{{ rsync_server_packages }}"

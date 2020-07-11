@@ -2,8 +2,10 @@
 
 # Manage service
 
+
 - name: 'INSTALL | Manage service state'
+  become: True
   service:
-    name: "{{ rsync_server_service.name }}"
     enabled: "{{ rsync_server_service.enabled | default(True) }}"
+    name: "{{ rsync_server_service.name }}"
     state: "{{ rsync_server_service.state | default('started') }}"
